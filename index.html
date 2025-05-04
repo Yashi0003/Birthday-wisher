@@ -116,17 +116,24 @@
       color: #ffd700;
       font-family: 'Great Vibes', cursive;
     }
+
+    #ageDisplay {
+      font-size: 2rem;
+      color: #fff;
+      font-weight: bold;
+    }
   </style>
 </head>
 <body>
 
 <canvas id="confetti-canvas"></canvas>
+<audio id="birthday-audio" src="happy-birthday-254480.mp3" autoplay></audio>
 
 <!-- Step 1: Name Input Screen -->
 <div class="container" id="input-screen">
   <h1>🎉 Birthday Wisher 🎂</h1>
   <p>Enter the name of the birthday person</p>
-  <input type="text" id="nameInput" placeholder="e.g. Anjali">
+  <input type="text" id="nameInput">
   <br>
   <button onclick="showBirthdayWish()">Wish Now</button>
 </div>
@@ -137,8 +144,12 @@
   <p id="quote1"></p>
   <p id="quote2"></p>
   <p id="quote3"></p>
+  <p>
+    Enter your birth year: <input type="number" id="birthYear" style="width: 100px;" onchange="calculateAge()">
+  </p>
+  <p id="ageDisplay"></p>
   <a id="whatsapp-share" class="share-btn" target="_blank">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp" style="height: 24px;">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp" style="height: 30px;">
   </a>
 </div>
 
@@ -149,6 +160,7 @@
   const wishScreen = document.getElementById('wish-screen');
   const birthdayMessage = document.getElementById('birthdayMessage');
   const whatsappBtn = document.getElementById('whatsapp-share');
+  const birthdayAudio = document.getElementById('birthday-audio');
 
   const quotes = [
     "Count your life by smiles, not tears. Count your age by friends, not years.",
@@ -176,6 +188,7 @@
     whatsappBtn.href = whatsappLink;
 
     launchConfetti();
+    birthdayAudio.play();
   }
 
   function launchConfetti() {
@@ -200,6 +213,16 @@
         requestAnimationFrame(frame);
       }
     })();
+  }
+
+  function calculateAge() {
+    const year = document.getElementById("birthYear").value;
+    if (year && year > 1900 && year <= new Date().getFullYear()) {
+      const age = new Date().getFullYear() - year;
+      document.getElementById("ageDisplay").innerText = `You are ${age} years old!`;
+    } else {
+      document.getElementById("ageDisplay").innerText = "";
+    }
   }
 </script>
 </body>
